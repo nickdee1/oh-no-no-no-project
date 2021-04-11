@@ -1,5 +1,11 @@
 # oh-no-no-no-project
 
+## Getting started
+
+To start the application run in the project directory:
+- `npm install`
+- `npm start`
+
 ## Technologies
 
 - react + functional components + hooks

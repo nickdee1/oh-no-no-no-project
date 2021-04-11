@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Reservation() {
-    return <></>
+  return <></>;
 }
 
 export default Reservation;

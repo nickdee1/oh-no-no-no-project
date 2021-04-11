@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Tablet() {
-    return <></>
+  return <></>;
 }
 
 export default Tablet;
