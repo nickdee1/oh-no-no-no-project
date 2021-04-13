@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Plan() {
-    return <></>
+  return <></>;
 }
 
 export default Plan;

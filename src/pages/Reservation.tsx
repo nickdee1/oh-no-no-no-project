@@ -1,7 +1,10 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 function Reservation() {
-    return <></>
+  return (
+    <Redirect to="/login" />
+  );
 }
 
 export default Reservation;
