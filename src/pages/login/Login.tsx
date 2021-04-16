@@ -1,43 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Grid } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import { Redirect } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { decrement, increment, incrementByAmount } from './loginSlice';
+import { logIn } from './loginSlice';
+import NavigationBar from '../../components/navbar/NavigationBar';
 
 export function Login() {
-  const count = useAppSelector((state) => state.login.value);
+  const logged = useAppSelector((state) => state.login.logged);
   const dispatch = useAppDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
-  const incrementValue = Number(incrementAmount) || 0;
+
+  if (logged) {
+    return <Redirect to="/" />;
+  }
 
   return (
-    <div>
-      <div>
-        <button
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          -
-        </button>
-        <span>{count}</span>
-        <button
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          +
-        </button>
-      </div>
-      <div>
-        <input
-          aria-label="Set increment amount"
-          value={incrementAmount}
-          onChange={(e) => setIncrementAmount(e.target.value)}
-        />
-        <button
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
-        >
-          Add Amount
-        </button>
-      </div>
-    </div>
+    <Grid container direction="column">
+      <Grid item>
+        <NavigationBar title="Login" />
+      </Grid>
+      <Grid item container>
+        <Grid item xs={1} md={2} />
+        <Grid item xs={10} md={8}>
+          <div>
+            <Button onClick={() => dispatch(logIn())}>
+              Login
+            </Button>
+          </div>
+        </Grid>
+        <Grid item xs={1} md={2} />
+      </Grid>
+    </Grid>
   );
 }
 
