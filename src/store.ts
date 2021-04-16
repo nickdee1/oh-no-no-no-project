@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import loginReducer from './pages/login/loginSlice';
+import planReducer from './pages/plan/planSlice';
 
 const store = configureStore({
   reducer: {
     login: loginReducer,
+    plan: planReducer,
   },
 });
 
