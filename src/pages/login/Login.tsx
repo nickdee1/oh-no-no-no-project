@@ -1,15 +1,12 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import { Redirect } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logIn } from './loginSlice';
+import { useAppSelector } from '../../hooks';
 import NavigationBar from '../../components/navbar/NavigationBar';
-import LoginContent from "../../components/login-content/LoginContent";
+import LoginContent from '../../components/login-content/LoginContent';
 
 export function Login() {
   const logged = useAppSelector((state) => state.login.logged);
-  const dispatch = useAppDispatch();
 
   if (logged) {
     return <Redirect to="/plan" />;

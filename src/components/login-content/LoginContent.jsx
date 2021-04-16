@@ -3,10 +3,12 @@ import {
   Checkbox,
   Grid, makeStyles, TextField, Typography, FormControlLabel, Button, Link, Container, CssBaseline,
 } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 import { setToken, logIn } from '../../pages/login/loginSlice';
 import theme from '../../theme';
 import { userService } from '../../services/login';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { PIN_STRING } from '../../constants/strings';
 
 const useStyles = makeStyles({
   paper: {
@@ -29,6 +31,8 @@ const useStyles = makeStyles({
 const LoginContent = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
+  const token_usr = useAppSelector((state) => state.login.token);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [inputs, setInputs] = useState({
     username: '',
     password: '',
@@ -45,11 +49,21 @@ const LoginContent = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
+    // TODO: handle errors
     userService.login(username, password)
       .then(
         (token) => {
           dispatch(setToken(token));
-          dispatch(logIn())
+          dispatch(logIn());
+        },
+      );
+    userService.firstCheckPin(token_usr)
+      .then(
+        (res) => {
+          if (res === '') {
+            userService.getGeneratedPin(token_usr)
+              .then((pin) => enqueueSnackbar(PIN_STRING(pin)));
+          }
         },
       );
   }

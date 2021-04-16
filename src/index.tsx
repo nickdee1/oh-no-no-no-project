@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
@@ -12,7 +13,9 @@ ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
       <ThemeProvider theme={theme}>
-        <App />
+        <SnackbarProvider hideIconVariant>
+          <App />
+        </SnackbarProvider>
       </ThemeProvider>
     </React.StrictMode>
   </Provider>,
