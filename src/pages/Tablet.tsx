@@ -2,7 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
 import PincodeValidation from '../components/pincode-validation/PincodeValidation';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import theme from '../theme';
+import TabletSuccess from "../components/pincode-validation/TabletSuccess";
+import TabletError from "../components/pincode-validation/TabletError";
 
 const useStyles = makeStyles({
   paper: {
@@ -18,6 +21,15 @@ const useStyles = makeStyles({
 
 function Tablet() {
   const classes = useStyles();
+  const tabletPlace = useAppSelector((state) => state.login.tabletPlace);
+
+  if (tabletPlace !== '' && tabletPlace !== 'error') {
+    return <TabletSuccess />
+  }
+  if (tabletPlace === 'error') {
+    return <TabletError />
+  }
+
   return (
     <Grid container direction="column" className={classes.paper}>
       <Grid item container>

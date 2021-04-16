@@ -1,11 +1,5 @@
 import { LOGIN_URI, GET_PIN_URI, GENERATE_PIN_URI } from '../constants/rest_constants';
 
-export const userService = {
-  login,
-  firstCheckPin,
-  getGeneratedPin
-};
-
 const getTokenOperations = (token) => ({
   method: 'GET',
   headers: { 'Content-Type': 'application/json', 'X-authSessionId': token },
@@ -50,5 +44,11 @@ function getGeneratedPin(token) {
   const requestOptions = generateTokenOperations(token);
   return fetch(GENERATE_PIN_URI, requestOptions)
     .then(handleResponse)
-    .then((result) => result.pin)
+    .then((result) => result.pin);
 }
+
+export const userService = {
+  login,
+  firstCheckPin,
+  getGeneratedPin,
+};

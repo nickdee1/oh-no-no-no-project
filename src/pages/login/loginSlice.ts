@@ -4,13 +4,19 @@ import { RootState } from '../../store';
 interface LoginState {
   value: number,
   logged: boolean,
-  token: string
+  token: string,
+  tabletPlace: string,
+  tablet_from: string,
+  tablet_to: string,
 }
 
 const initialState: LoginState = {
   value: 0,
   logged: false,
   token: '',
+  tabletPlace: '',
+  tablet_from: '',
+  tablet_to: '',
 };
 
 export const loginSlice = createSlice({
@@ -34,6 +40,9 @@ export const loginSlice = createSlice({
     },
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
+    },
+    setTabletPlace: (state, action: PayloadAction<string>) => {
+      state.tabletPlace = action.payload
     }
   },
 });
@@ -44,7 +53,8 @@ export const {
   incrementByAmount,
   logIn,
   logOut,
-  setToken
+  setToken,
+    setTabletPlace
 } = loginSlice.actions;
 
 export const selectCount = (state: RootState) => state.login.value;

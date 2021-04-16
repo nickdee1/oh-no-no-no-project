@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Button, makeStyles, TextField } from '@material-ui/core';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setTabletPlace } from '../../pages/login/loginSlice';
 import theme from '../../theme';
+import tabletService from '../../services/tablet';
 
 const useStyles = makeStyles({
   form: {
@@ -20,11 +23,20 @@ const useStyles = makeStyles({
 const PincodeValidation = () => {
   const classes = useStyles();
   const [pinInput, setPinInput] = useState('');
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    alert(pinInput)
-  }
+    tabletService.getParkingPosition(pinInput)
+      .then(
+        (res) => {
+          dispatch(setTabletPlace(res.place));
+        },
+        (err) => {
+          dispatch(setTabletPlace('error'));
+        },
+      );
+  };
 
   return (
     <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
