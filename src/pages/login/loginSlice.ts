@@ -3,12 +3,14 @@ import { RootState } from '../../store';
 
 interface LoginState {
   value: number,
-  logged: boolean
+  logged: boolean,
+  token: string
 }
 
 const initialState: LoginState = {
   value: 0,
   logged: false,
+  token: '',
 };
 
 export const loginSlice = createSlice({
@@ -30,6 +32,9 @@ export const loginSlice = createSlice({
     logOut: (state) => {
       state.logged = false;
     },
+    setToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
+    }
   },
 });
 
@@ -39,6 +44,7 @@ export const {
   incrementByAmount,
   logIn,
   logOut,
+  setToken
 } = loginSlice.actions;
 
 export const selectCount = (state: RootState) => state.login.value;
