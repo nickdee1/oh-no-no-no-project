@@ -77,12 +77,6 @@ export default function SideMenu() {
             <ListItemText primary="Parking plan" />
           </ListItem>
         </NavLink>
-        <NavLink to="/history">
-          <ListItem button key="plan">
-            <ListItemIcon><MailIcon /></ListItemIcon>
-            <ListItemText primary="Parking history" />
-          </ListItem>
-        </NavLink>
       </List>
       <Divider />
       <List>

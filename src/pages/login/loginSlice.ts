@@ -50,6 +50,12 @@ export const loginSlice = createSlice({
     setTabletPlace: (state, action: PayloadAction<string>) => {
       state.tabletPlace = action.payload;
     },
+    setTabletFrom: (state, action: PayloadAction<string>) => {
+      state.tablet_from = action.payload;
+    },
+    setTabletTo: (state, action: PayloadAction<string>) => {
+      state.tablet_to = action.payload;
+    },
   },
 });
 
@@ -61,6 +67,8 @@ export const {
   setPin,
   setToken,
   setTabletPlace,
+  setTabletFrom,
+  setTabletTo,
 } = loginSlice.actions;
 
 export const selectCount = (state: RootState) => state.login.value;

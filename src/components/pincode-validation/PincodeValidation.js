@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, makeStyles, TextField, Grid } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setTabletPlace } from '../../pages/login/loginSlice';
+import { setTabletPlace, setTabletFrom, setTabletTo } from '../../pages/login/loginSlice';
 import theme from '../../theme';
 import NumPad from 'react-numpad';
 import tabletService from '../../services/tablet';
@@ -33,6 +33,8 @@ const PincodeValidation = () => {
       .then(
         (res) => {
           dispatch(setTabletPlace(res.place));
+          dispatch(setTabletFrom(res.from.split('T')[1]));
+          dispatch(setTabletTo(res.until.split('T')[1]));
         },
         (err) => {
           dispatch(setTabletPlace('error'));
