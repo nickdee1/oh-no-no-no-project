@@ -57,6 +57,8 @@ const LoginContent = () => {
           dispatch(setUsername(username));
           dispatch(setRole(result.role.split(":")[1]));
           localStorage.setItem('usr_token', result.authSessionId)
+          localStorage.setItem('usr_username', username)
+          localStorage.setItem('usr_role', result.role.split(":")[1])
           dispatch(logIn());
           userService.firstCheckPin(token_usr)
             .then(
@@ -65,9 +67,11 @@ const LoginContent = () => {
                   userService.getGeneratedPin(token_usr)
                     .then((pin) => {
                       dispatch(setPin(pin));
+                      localStorage.setItem('usr_pin', pin)
                       enqueueSnackbar(PIN_STRING(pin), { variant: 'success' });
                     });
                 } else {
+                  localStorage.setItem('usr_pin', res)
                   dispatch(setPin(res));
                 }
               },

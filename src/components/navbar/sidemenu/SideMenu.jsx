@@ -32,9 +32,9 @@ export default function SideMenu() {
   const dispatch = useAppDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const token = useAppSelector((state) => state.login.token);
-  const pin = useAppSelector((state) => state.login.pin);
-  const role = useAppSelector((state) => state.login.role);
-  const username = useAppSelector((state) => state.login.username);
+  const username = localStorage.getItem('usr_username')
+  const role = localStorage.getItem('usr_role')
+  const pin = localStorage.getItem('usr_pin')
 
   const toggleDrawer = (value) => (event) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
