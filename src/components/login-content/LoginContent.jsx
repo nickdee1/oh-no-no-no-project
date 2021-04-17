@@ -55,7 +55,7 @@ const LoginContent = () => {
         (result) => {
           dispatch(setToken(result.authSessionId));
           dispatch(setUsername(username));
-          dispatch(setRole(result.role));
+          dispatch(setRole(result.role.split(":")[1]));
           dispatch(logIn());
           userService.firstCheckPin(token_usr)
             .then(
