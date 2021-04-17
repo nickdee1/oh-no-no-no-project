@@ -23,7 +23,10 @@ const useStyles = makeStyles((theme) => ({
 export default function NavigationBar(props) {
   const classes = useStyles();
 
-  const logged = useAppSelector((state) => state.login.logged);
+  let logged = useAppSelector((state) => state.login.logged);
+  if (!logged && localStorage.getItem('usr_token')) {
+    logged = true
+  }
 
   const menuButton = logged
     ? <SideMenu />
