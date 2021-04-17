@@ -1,14 +1,20 @@
 import { LOGIN_URI, LOGOUT_URI, GET_PIN_URI, GENERATE_PIN_URI } from '../constants/rest_constants';
 
-const getTokenOperations = (token) => ({
+const getTokenOperations = (token, username) => ({
   method: 'GET',
-  headers: { 'Content-Type': 'application/json', 'X-authSessionId': token },
+  headers: { 'Content-Type': 'application/json', 'X-authSessionId': token, 'username': username },
 });
 
 const postTokenOperations = (token) => ({
   method: 'POST',
   headers: { 'Content-Type': 'application/json', 'X-authSessionId': token },
 });
+
+const postGenTokenOperations = (token, username) => ({
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', 'X-authSessionId': token, 'username': username},
+});
+
 
 function handleJSONResponse(response) {
   return response.text().then((text) => {
@@ -49,15 +55,16 @@ function logout(token) {
   return fetch(LOGOUT_URI, requestOptions).then(handleSimpleResponse).then(result => result)
 }
 
-function firstCheckPin(token) {
-  const requestOptions = getTokenOperations(token);
+function firstCheckPin(token, username) {
+  const requestOptions = getTokenOperations(token, username);
   return fetch(GET_PIN_URI, requestOptions)
     .then(handleJSONResponse)
     .then((result) => result.pin);
 }
 
-function getGeneratedPin(token) {
-  const requestOptions = postTokenOperations(token);
+function getGeneratedPin(token, username) {
+  const requestOptions = postGenTokenOperations(token, username);
+  console.log(requestOptions)
   return fetch(GENERATE_PIN_URI, requestOptions)
     .then(handleJSONResponse)
     .then((result) => result.pin);
