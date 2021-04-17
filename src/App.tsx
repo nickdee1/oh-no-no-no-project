@@ -9,13 +9,15 @@ import Plan from './pages/plan/Plan';
 import History from './pages/History';
 import Account from './pages/Account';
 import Tablet from './pages/Tablet';
-import Reservation from './pages/Reservation';
+import Main from './pages/main/Main';
+import 'moment/locale/cs';
 
 import './App.css';
-
-const localizer = momentLocalizer(moment);
+import Reception from "./pages/reception/Reception";
 
 function App() {
+  const localizer = momentLocalizer(moment);
+
   return (
     <div className="App">
       <Router>
@@ -25,7 +27,8 @@ function App() {
           <Route path="/history" component={History} />
           <Route path="/account" component={Account} />
           <Route path="/tablet" component={Tablet} />
-          <Route path="/" component={Reservation} />
+          <Route path="/reception" component={() => <Reception localizer={localizer} />} />
+          <Route path="/" component={Main} />
         </Switch>
       </Router>
     </div>

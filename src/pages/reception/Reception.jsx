@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import { Calendar, Views } from 'react-big-calendar';
-import { addEvent, deleteEvent } from './planSlice';
+import { addEvent, deleteEvent } from './receptionSlice';
 
 import NavigationBar from '../../components/navbar/NavigationBar';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -12,40 +12,33 @@ function checkCollision(newEvent, events) {
             || (newEvent.end > event.start && newEvent.end < event.end)
             || (event.start > newEvent.start && event.start < newEvent.end)
             || (event.end > newEvent.start && event.end < newEvent.end)
-            || (newEvent.start.getTime() === event.start.getTime() && newEvent.end.getTime() === event.end.getTime())) {
+            || (event.start.getTime() === newEvent.start.getTime() && event.end.getTime() === newEvent.end.getTime())) {
       return false;
     }
   }
   return true;
 }
 
-function checkTime(newEvent, events) {
-  let totalSlots = Math.ceil(Math.abs(newEvent.start - newEvent.end) / (1000 * 60 * 15));
-  events.filter((event) => event.start.getDay() === newEvent.start.getDay())
-    .forEach((event) => {
-      totalSlots += Math.ceil(Math.abs(event.start - event.end) / (1000 * 60 * 15));
-    });
-  return totalSlots <= 32;
-}
-
-const Plan = ({ localizer }) => {
-  const events = useAppSelector((state) => state.plan.events);
+const Reception = ({ localizer }) => {
+  const events = useAppSelector((state) => state.reception.events);
+  const resources = useAppSelector((state) => state.reception.resources);
   const dispatch = useAppDispatch();
 
   const handleSelectSlot = ({
     start,
     end,
+    resourceId,
   }) => {
     const idList = events.map((event) => event.id);
     const newId = (idList.length !== 0 ? Math.max(...idList) : 0) + 1;
     const newEvent = {
       id: newId,
+      resourceId,
       start,
       end,
     };
-    const userEvents = events.filter((event) => event.id > 0);
-    if (checkTime(newEvent, userEvents)
-            && (events.length === 0 || checkCollision(newEvent, events))) {
+    const sameEvents = events.filter((event) => event.resourceId === resourceId);
+    if ((events.length === 0 || checkCollision(newEvent, sameEvents))) {
       dispatch(addEvent(newEvent));
     }
   };
@@ -53,10 +46,6 @@ const Plan = ({ localizer }) => {
   const handleSelectEvent = (event) => {
     if (window.confirm('Are you sure you wish to delete this event?')) dispatch(deleteEvent(event.id));
   };
-
-  const eventStyleGetter = (event) => (event.id < 0
-    ? { style: { backgroundColor: '#d32f2f' } }
-    : { style: { backgroundColor: '#43a047' } });
 
   return (
     <Grid container direction="column">
@@ -70,18 +59,17 @@ const Plan = ({ localizer }) => {
             selectable
             resizable
             popup
-            toolbar={false}
             events={events}
             localizer={localizer}
-            defaultView={Views.WEEK}
-            views={['week']}
+            defaultView={Views.DAY}
+            views={['day', 'week']}
             step={15}
             timeslots={4}
             min={new Date(null, null, null, 6)}
             max={new Date(null, null, null, 22)}
+            resources={resources}
             onSelectSlot={handleSelectSlot}
             onSelectEvent={handleSelectEvent}
-            eventPropGetter={eventStyleGetter}
           />
         </Grid>
         <Grid item xs={1} md={2} />
@@ -90,4 +78,4 @@ const Plan = ({ localizer }) => {
   );
 };
 
-export default Plan;
+export default Reception;

@@ -3,24 +3,45 @@ import { RootState } from '../../store';
 
 interface Event {
   id: number,
+  resourceId: number,
   start: Date,
   end: Date
 }
 
-interface PlanState {
-  events: Array<Event>,
+interface Resource {
+  id: number,
+  title: string,
 }
 
-const initialState: PlanState = {
-  events: [{
-    id: -1,
-    start: new Date(2021, 3, 17, 8),
-    end: new Date(2021, 3, 17, 14),
-  }],
+interface ReceptionState {
+  events: Array<Event>,
+  resources: Array<Resource>
+}
+
+const initialState: ReceptionState = {
+  events: [],
+  resources: [
+    {
+      id: 1,
+      title: 'Place 101',
+    },
+    {
+      id: 2,
+      title: 'Place 102',
+    },
+    {
+      id: 3,
+      title: 'Place 103',
+    },
+    {
+      id: 4,
+      title: 'Place 104',
+    },
+  ],
 };
 
-export const planSlice = createSlice({
-  name: 'plan',
+export const receptionSlice = createSlice({
+  name: 'reception',
   initialState,
   reducers: {
     addEvent: (state, action: PayloadAction<Event>) => {
@@ -35,8 +56,8 @@ export const planSlice = createSlice({
 export const {
   addEvent,
   deleteEvent,
-} = planSlice.actions;
+} = receptionSlice.actions;
 
 export const selectCount = (state: RootState) => state.login.value;
 
-export default planSlice.reducer;
+export default receptionSlice.reducer;
