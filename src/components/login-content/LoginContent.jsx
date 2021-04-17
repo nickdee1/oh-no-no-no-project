@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import {
-  Checkbox,
-  Grid, makeStyles, TextField, Typography, FormControlLabel, Button, Link, Container, CssBaseline,
+  Grid, makeStyles, TextField, Typography, Button, Container, CssBaseline,
 } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
-import { setToken, logIn } from '../../pages/login/loginSlice';
+import {
+  setToken, logIn, logOut, setRole, setPin,
+} from '../../pages/login/loginSlice';
 import theme from '../../theme';
 import { userService } from '../../services/login';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -49,21 +50,36 @@ const LoginContent = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    // TODO: handle errors
     userService.login(username, password)
       .then(
-        (token) => {
-          dispatch(setToken(token));
+        (result) => {
+          dispatch(setToken(result.authSessionId));
+          dispatch(setRole(result.role));
           dispatch(logIn());
+          userService.firstCheckPin(token_usr)
+            .then(
+              (res) => {
+                if (res === '') {
+                  userService.getGeneratedPin(token_usr)
+                    .then((pin) => {
+                      dispatch(setPin(pin));
+                      enqueueSnackbar(PIN_STRING(pin), { variant: 'success' });
+                    });
+                } else {
+                  dispatch(setPin(res));
+                }
+              },
+            );
         },
-      );
-    userService.firstCheckPin(token_usr)
-      .then(
-        (res) => {
-          if (res === '') {
-            userService.getGeneratedPin(token_usr)
-              .then((pin) => enqueueSnackbar(PIN_STRING(pin)));
+        (error) => {
+          if (error === 400) {
+            enqueueSnackbar('Login or password are not correct!', { variant: 'error' });
+          } else {
+            enqueueSnackbar('Some error occurred. Try this action later..', { variant: 'error' });
           }
+          dispatch(setToken(''));
+          dispatch(setRole(''));
+          dispatch(logOut());
         },
       );
   }
@@ -100,10 +116,6 @@ const LoginContent = () => {
             autoComplete="current-password"
             onChange={handleChange}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -113,13 +125,7 @@ const LoginContent = () => {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2" color="secondary">
-                Forgot password?
-              </Link>
-            </Grid>
-          </Grid>
+          <Grid container />
         </form>
       </div>
     </Container>

@@ -5,6 +5,8 @@ interface LoginState {
   value: number,
   logged: boolean,
   token: string,
+  role: string,
+  pin: string,
   tabletPlace: string,
   tablet_from: string,
   tablet_to: string,
@@ -14,6 +16,8 @@ const initialState: LoginState = {
   value: 0,
   logged: false,
   token: '',
+  role: '',
+  pin: '',
   tabletPlace: '',
   tablet_from: '',
   tablet_to: '',
@@ -38,23 +42,29 @@ export const loginSlice = createSlice({
     logOut: (state) => {
       state.logged = false;
     },
+    setRole: (state, action: PayloadAction<string>) => {
+      state.role = action.payload;
+    },
+    setPin: (state, action: PayloadAction<string>) => {
+      state.pin = action.payload;
+    },
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
     },
     setTabletPlace: (state, action: PayloadAction<string>) => {
-      state.tabletPlace = action.payload
-    }
+      state.tabletPlace = action.payload;
+    },
   },
 });
 
 export const {
   increment,
-  decrement,
-  incrementByAmount,
   logIn,
   logOut,
+  setRole,
+  setPin,
   setToken,
-    setTabletPlace
+  setTabletPlace,
 } = loginSlice.actions;
 
 export const selectCount = (state: RootState) => state.login.value;
