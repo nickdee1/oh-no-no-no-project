@@ -6,6 +6,7 @@ interface LoginState {
   logged: boolean,
   token: string,
   role: string,
+  username: string,
   pin: string,
   tabletPlace: string,
   tablet_from: string,
@@ -17,6 +18,7 @@ const initialState: LoginState = {
   logged: false,
   token: '',
   role: '',
+  username: '',
   pin: '',
   tabletPlace: '',
   tablet_from: '',
@@ -36,6 +38,9 @@ export const loginSlice = createSlice({
     setRole: (state, action: PayloadAction<string>) => {
       state.role = action.payload;
     },
+    setUsername: (state, action: PayloadAction<string>) => {
+      state.username = action.payload;
+    },
     setPin: (state, action: PayloadAction<string>) => {
       state.pin = action.payload;
     },
@@ -52,6 +57,7 @@ export const {
   logIn,
   logOut,
   setRole,
+  setUsername,
   setPin,
   setToken,
   setTabletPlace,

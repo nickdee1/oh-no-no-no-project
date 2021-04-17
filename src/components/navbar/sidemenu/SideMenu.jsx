@@ -33,6 +33,8 @@ export default function SideMenu() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const token = useAppSelector((state) => state.login.token);
   const pin = useAppSelector((state) => state.login.pin);
+  const role = useAppSelector((state) => state.login.role);
+  const username = useAppSelector((state) => state.login.username);
 
   const toggleDrawer = (value) => (event) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -60,9 +62,11 @@ export default function SideMenu() {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
+        <ListItem key="username">
+          <ListItemText primary={`Hello, ${username}`} secondary={`${role}`} />
+        </ListItem>
         <ListItem key="pin">
-          <ListItemIcon><AccountCircleIcon /></ListItemIcon>
-          <ListItemText primary={ 'PIN: ' + pin } />
+          <ListItemText primary={`Your PIN is : ${pin}`} />
         </ListItem>
         <Divider />
         <NavLink to="/plan">
@@ -75,12 +79,6 @@ export default function SideMenu() {
           <ListItem button key="plan">
             <ListItemIcon><MailIcon /></ListItemIcon>
             <ListItemText primary="Parking history" />
-          </ListItem>
-        </NavLink>
-        <NavLink to="/account">
-          <ListItem button key="plan">
-            <ListItemIcon><MailIcon /></ListItemIcon>
-            <ListItemText primary="Account" />
           </ListItem>
         </NavLink>
       </List>
