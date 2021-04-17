@@ -24,6 +24,8 @@ const TabletSuccess = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const tabletPlace = useAppSelector((state) => state.login.tabletPlace);
+  const tabletFrom = useAppSelector((state) => state.login.tablet_from);
+  const tabletTo = useAppSelector((state) => state.login.tablet_to);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -42,6 +44,9 @@ const TabletSuccess = () => {
             Your place is:
             {' '}
             {tabletPlace}
+          </Typography>
+          <Typography variant="h6">
+            From {tabletFrom} to {tabletTo}
           </Typography>
           <Button
             variant="contained"
