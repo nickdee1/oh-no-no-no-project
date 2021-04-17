@@ -15,7 +15,7 @@ const initialState: PlanState = {
   events: [{
     id: -1,
     start: new Date(2021, 3, 17, 8),
-    end: new Date(2021, 3, 17, 14),
+    end: new Date(2021, 3, 17, 10),
   }],
 };
 

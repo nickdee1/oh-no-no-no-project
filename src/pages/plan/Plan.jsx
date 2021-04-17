@@ -28,6 +28,10 @@ function checkTime(newEvent, events) {
   return totalSlots <= 32;
 }
 
+function isActive(event) {
+  return event.end > new Date();
+}
+
 const Plan = ({ localizer }) => {
   const events = useAppSelector((state) => state.plan.events);
   const dispatch = useAppDispatch();
@@ -37,26 +41,37 @@ const Plan = ({ localizer }) => {
     end,
   }) => {
     const idList = events.map((event) => event.id);
-    const newId = (idList.length !== 0 ? Math.max(...idList) : 0) + 1;
+    const biggestId = Math.max(...idList);
+    const newId = biggestId <= 0 ? 1 : biggestId + 1;
     const newEvent = {
       id: newId,
       start,
       end,
     };
     const userEvents = events.filter((event) => event.id > 0);
-    if (checkTime(newEvent, userEvents)
+    if (isActive(newEvent) && checkTime(newEvent, userEvents)
             && (events.length === 0 || checkCollision(newEvent, events))) {
       dispatch(addEvent(newEvent));
     }
   };
 
   const handleSelectEvent = (event) => {
-    if (window.confirm('Are you sure you wish to delete this event?')) dispatch(deleteEvent(event.id));
+    if (isActive(event) && event.id > 0 && window.confirm('Are you sure you wish to delete this event?')) dispatch(deleteEvent(event.id));
   };
 
   const eventStyleGetter = (event) => (event.id < 0
-    ? { style: { backgroundColor: '#d32f2f' } }
-    : { style: { backgroundColor: '#43a047' } });
+    ? {
+      style: {
+        backgroundColor: '#d32f2f',
+        opacity: isActive(event) ? 1 : 0.5,
+      },
+    }
+    : {
+      style: {
+        backgroundColor: '#43a047',
+        opacity: isActive(event) ? 1 : 0.5,
+      },
+    });
 
   return (
     <Grid container direction="column">
