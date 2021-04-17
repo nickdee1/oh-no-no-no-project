@@ -60,11 +60,11 @@ const LoginContent = () => {
           localStorage.setItem('usr_username', username)
           localStorage.setItem('usr_role', result.role.split(":")[1])
           dispatch(logIn());
-          userService.firstCheckPin(token_usr)
+          userService.firstCheckPin(token_usr, username)
             .then(
               (res) => {
                 if (res === '') {
-                  userService.getGeneratedPin(token_usr)
+                  userService.getGeneratedPin(token_usr, username)
                     .then((pin) => {
                       dispatch(setPin(pin));
                       localStorage.setItem('usr_pin', pin)
