@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    color: 'white'
   },
 }));
 
@@ -31,7 +32,7 @@ export default function NavigationBar(props) {
   const menuButton = logged
     ? <SideMenu />
     : (
-      <NavLink to="/login">
+      <NavLink style={{textDecoration: 'none', color: 'white'}} to="/login">
         <Button color="inherit">
           Login
         </Button>
@@ -40,9 +41,9 @@ export default function NavigationBar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar color="secondary" position="static">
         <Toolbar>
-          <NavLink to="/">
+          <NavLink style={{textDecoration: 'none'}} to="/">
             <Typography variant="h6" className={classes.title}>
               OH-NO-NO-NO Parking
             </Typography>

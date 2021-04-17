@@ -5,6 +5,13 @@ import { addEvent, deleteEvent } from './planSlice';
 
 import NavigationBar from '../../components/navbar/NavigationBar';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  root: {
+    marginTop: 20
+  }
+});
 
 function checkCollision(newEvent, events) {
   for (const event of events) {
@@ -33,6 +40,7 @@ function isActive(event) {
 }
 
 const Plan = ({ localizer }) => {
+  const classes = useStyles();
   const events = useAppSelector((state) => state.plan.events);
   const dispatch = useAppDispatch();
 
@@ -78,7 +86,7 @@ const Plan = ({ localizer }) => {
       <Grid item>
         <NavigationBar title="Plan" />
       </Grid>
-      <Grid item container>
+      <Grid className={classes.root} item container>
         <Grid item xs={1} md={2} />
         <Grid item xs={10} md={8}>
           <Calendar
