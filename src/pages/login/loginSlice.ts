@@ -27,15 +27,6 @@ export const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
-    },
     logIn: (state) => {
       state.logged = true;
     },
@@ -58,7 +49,6 @@ export const loginSlice = createSlice({
 });
 
 export const {
-  increment,
   logIn,
   logOut,
   setRole,
