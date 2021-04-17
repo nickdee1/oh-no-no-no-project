@@ -71,7 +71,7 @@ export default function SideMenu() {
           <ListItemText primary={`Your PIN is : ${pin}`} />
         </ListItem>
         <Divider />
-        <NavLink to="/plan">
+        <NavLink style={{textDecoration: 'none', color: 'black'}} to="/plan">
           <ListItem button key="plan">
             <ListItemIcon><MailIcon /></ListItemIcon>
             <ListItemText primary="Parking plan" />
