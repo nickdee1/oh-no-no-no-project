@@ -21,8 +21,11 @@ import AdminRoute from './components/router/AdminRoute';
 
 function App() {
   const localizer = momentLocalizer(moment);
-  const logged = useAppSelector((state) => state.login.logged);
+  let logged = useAppSelector((state) => state.login.logged);
   const role = useAppSelector((state) => state.login.role);
+  if (!logged && localStorage.getItem('usr_token')) {
+    logged = true
+  }
 
   return (
     <div className="App">

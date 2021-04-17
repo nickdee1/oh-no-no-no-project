@@ -15,6 +15,7 @@ import { useSnackbar } from 'notistack';
 import { logOut, setRole, setToken } from '../../../pages/login/loginSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { userService } from '../../../services/login';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   list: {
@@ -49,7 +50,9 @@ export default function SideMenu() {
         dispatch(logOut());
         dispatch(setRole(''));
         dispatch(setToken(''));
+        localStorage.clear()
         enqueueSnackbar('You were successfully logged out', { variant: 'success' });
+        window.location.reload()
       });
   }
 
