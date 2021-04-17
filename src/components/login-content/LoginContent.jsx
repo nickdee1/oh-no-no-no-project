@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import {
-  setToken, logIn, logOut, setRole, setPin,
+  setToken, logIn, logOut, setRole, setUsername, setPin,
 } from '../../pages/login/loginSlice';
 import theme from '../../theme';
 import { userService } from '../../services/login';
@@ -54,6 +54,7 @@ const LoginContent = () => {
       .then(
         (result) => {
           dispatch(setToken(result.authSessionId));
+          dispatch(setUsername(username));
           dispatch(setRole(result.role));
           dispatch(logIn());
           userService.firstCheckPin(token_usr)
@@ -79,6 +80,7 @@ const LoginContent = () => {
           }
           dispatch(setToken(''));
           dispatch(setRole(''));
+          dispatch(setUsername(''));
           dispatch(logOut());
         },
       );
