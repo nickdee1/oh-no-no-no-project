@@ -15,9 +15,9 @@ interface LoginState {
 
 const initialState: LoginState = {
   value: 0,
-  logged: false,
+  logged: true,
   token: '',
-  role: '',
+  role: 'ADMIN',
   username: '',
   pin: '',
   tabletPlace: '',

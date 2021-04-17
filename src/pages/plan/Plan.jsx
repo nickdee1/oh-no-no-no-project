@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import { Calendar, Views } from 'react-big-calendar';
-import { addEvent, deleteEvent } from './planSlice';
+import { addEvent, deleteEvent, setEvents } from './planSlice';
 
 import NavigationBar from '../../components/navbar/NavigationBar';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {makeStyles} from '@material-ui/core/styles';
+import tabletService from '../../services/tablet';
+import { scheduleService } from "../../services/schedule";
 
 const useStyles = makeStyles({
   root: {
