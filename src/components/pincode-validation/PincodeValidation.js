@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Button, makeStyles, TextField } from '@material-ui/core';
+import { Button, makeStyles, TextField, Grid } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setTabletPlace } from '../../pages/login/loginSlice';
 import theme from '../../theme';
+import NumPad from 'react-numpad';
 import tabletService from '../../services/tablet';
 
 const useStyles = makeStyles({
@@ -12,7 +13,8 @@ const useStyles = makeStyles({
   },
   submit: {
     height: '100px',
-    margin: theme.spacing(3, 0, 2),
+    marginTop: 10,
+    color: 'secondary',
   },
   input1: {
     height: 50,
@@ -40,6 +42,9 @@ const PincodeValidation = () => {
 
   return (
     <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
+      <NumPad.Number
+        onChange={(e) => setPinInput(e)}
+      >
       <TextField
         variant="outlined"
         margin="normal"
@@ -49,9 +54,11 @@ const PincodeValidation = () => {
         id="pin"
         label="Your PIN code"
         name="pin"
+        value={pinInput}
         InputProps={{ classes: { input: classes.input1 } }}
         onChange={(e) => setPinInput(e.target.value)}
       />
+      </NumPad.Number>
       <Button
         type="submit"
         fullWidth
