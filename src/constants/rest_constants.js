@@ -5,3 +5,4 @@ export const LOGOUT_URI = `${BASE_URL}/auth/logout`;
 export const GET_PIN_URI = `${BASE_URL}/auth/pin`;
 export const GENERATE_PIN_URI = `${BASE_URL}/auth/generatePin`;
 export const GET_TABLET_PLACE_URI = `${BASE_URL}/schedule/getByPin`;
+export const GET_SCHEDULE_URI = `${BASE_URL}/schedule/getSchedule`;

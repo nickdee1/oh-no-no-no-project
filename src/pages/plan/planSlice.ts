@@ -29,12 +29,16 @@ export const planSlice = createSlice({
     deleteEvent: (state, action: PayloadAction<number>) => {
       state.events = state.events.filter((event) => event.id !== action.payload);
     },
+    setEvents: (state, action: PayloadAction<Array<Event>>) => {
+      state.events = action.payload;
+    },
   },
 });
 
 export const {
   addEvent,
   deleteEvent,
+    setEvents
 } = planSlice.actions;
 
 export const selectCount = (state: RootState) => state.login.value;
